@@ -1,6 +1,9 @@
+import java.util.HashMap;
+import java.util.Map;
+
 public class EjerciciosPD {
 
-    public int getFibonaci(int n) {
+    public long getFibonaci(int n) {
         if (n <= 1) {
             return n;
         } else {
@@ -8,26 +11,21 @@ public class EjerciciosPD {
         }
     }
 
-    public int getFibonaciPD(int n) {
-        int[] arr = new int[n + 1];
-        for (int i = 0; i <= n; i++) {
-            arr[i] = -1;
-        }
-        return getFibonaciPD(n, arr);
+    public Long getFibonaciPD(int n) {
+        Map<Integer, Long> cache = new HashMap<>();
+        return getFibonaciPDHelper(n, cache);
     }
 
-    private int getFibonaciPD(int i, int[] arr) {
-        if (arr[i] != -1) {
-            return arr[i];
+    private Long getFibonaciPDHelper(int n, Map<Integer, Long> arr) {
+        if (n <= 1) {
+            return (long) n;
         }
-
-        if (i <= 1) {
-            arr[i] = i;
-        } else {
-            arr[i] = getFibonaciPD(i - 1, arr) + getFibonaciPD(i - 2, arr);
+        if (arr.containsKey(n)) {
+            return arr.get(n);
         }
-
-        return arr[i];
+        Long resultado = getFibonaciPDHelper(n - 1, arr) + getFibonaciPDHelper(n - 2, arr);
+        arr.put(n, resultado);
+        return resultado;
     }
 
 }
